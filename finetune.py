@@ -1,6 +1,11 @@
-'''
- * Copied from Tag2Text finetune Written by Xinyu Huang
-'''
+# --------------------------------------------------------
+# The Tag2Text Model
+# Copyright (c) 2023 
+# Licensed under The MIT License [see LICENSE for details]
+# Written by Xinyu Huang
+# --------------------------------------------------------
+
+
 import argparse
 import os
 import ruamel.yaml as yaml
