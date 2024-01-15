@@ -1,6 +1,5 @@
 '''
- * RAM++ & RAM & Tag2Text finetune
- * Written by Xinyu Huang
+ * Copied from Tag2Text finetune Written by Xinyu Huang
 '''
 import argparse
 import os
