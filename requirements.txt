@@ -1,0 +1,6 @@
+wandb
+torchmetrics
+torch
+torchvision
+pytorch_lightning
+peft
