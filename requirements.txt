@@ -6,3 +6,4 @@ pytorch_lightning
 peft
 ruamel.yaml
 timm
+fairscale
