@@ -3,10 +3,6 @@ import json
 import os
 
 import torch
-import torch.distributed as dist
-
-import utils
-
 def pre_caption(caption,max_words=50):
     caption = re.sub(
         r"([.!\"()*#:;~])",       
