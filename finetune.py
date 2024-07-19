@@ -27,8 +27,8 @@ from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import ModelCheckpoint, LearningRateMonitor
 
 from ram.models import tag2text
-import utils
-from utils import cosine_lr_schedule
+# import utils
+# from utils import cosine_lr_schedule
 from ram.data import create_dataset, create_loader
 
 import clip
