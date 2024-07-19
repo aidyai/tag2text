@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision.transforms.functional import InterpolationMode
 
-from .dataset import pretrain_dataset, finetune_dataset
+from .dataset import finetune_dataset
 from .randaugment import RandomAugment
 
 def create_dataset(dataset, config, min_scale=0.5):
