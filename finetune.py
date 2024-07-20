@@ -71,9 +71,24 @@ class Tag2TextModel(pl.LightningModule):
         }
         return [optimizer], [scheduler]
 
-def main(args, config):
-    device = torch.device(args.device if torch.cuda.is_available() else 'cpu')
-    pl.seed_everything(args.seed)
+
+
+
+
+
+def main():
+    # Specified values
+    config_path = './config/pretrain.yaml'
+    output_dir = 'output/Pretrain'
+    checkpoint = ''
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    seed = 42
+
+    # Load YAML configuration
+    yaml_loader = yaml.YAML(typ='rt')
+    config = yaml_loader.load(open(config_path, 'r'))
+
+    pl.seed_everything(seed)
 
     # Create dataset and dataloader
     datasets = [create_dataset('finetune', config, min_scale=0.2)]
@@ -82,7 +97,7 @@ def main(args, config):
     data_loader = create_loader(datasets, samplers=[None], batch_size=[config['batch_size']], num_workers=[4], is_trains=[True], collate_fns=[None])[0]
 
     # Create model
-    model = Tag2TextModel(config, checkpoint=args.checkpoint)
+    model = Tag2TextModel(config, checkpoint=checkpoint)
 
     # Logger and callbacks
     wandb_logger = WandbLogger(project='Tag2Text')
@@ -99,20 +114,5 @@ def main(args, config):
     # Training
     trainer.fit(model, data_loader)
 
-if __name__:
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--config', default='./configs/pretrain.yaml')
-    parser.add_argument("--model-type", type=str, choices=("tag2text"), required=True)
-    parser.add_argument('--output-dir', default='output/Pretrain')
-    parser.add_argument('--checkpoint', default='')
-    parser.add_argument('--evaluate', action='store_true')
-    parser.add_argument('--device', default='cuda')
-    parser.add_argument('--seed', default=42, type=int)
-    args = parser.parse_args()
-
-    config = yaml.load(open(args.config, 'r'), Loader=yaml.Loader)
-
-    Path(args.output_dir).mkdir(parents=True, exist_ok=True)
-    yaml.dump(config, open(os.path.join(args.output_dir, 'config.yaml'), 'w'))
-
-    main(args, config)
+if __name__ == '__main__':
+    main()
