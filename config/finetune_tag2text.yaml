@@ -1,7 +1,7 @@
 train_file: [
-            '/content/charles.json',
+            'datasets/train/coco_train_rmcocodev_ram.json',
              ]
-image_path_root: "/content/img"
+image_path_root: ""
 
 # size of vit model; base or large
 vit: 'swin_b'
