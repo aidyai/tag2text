@@ -1,5 +1,6 @@
 # TAG GENERATOR FROM DESCRIPTIONS AND TAG INDEX PROCESSOR
 
+# CODE FOR GENERATION
 
 # Check if 'CAPTION_v2' column exists, if not, create it
 if 'TAGS' not in df.columns:
