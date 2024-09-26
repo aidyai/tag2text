@@ -37,3 +37,7 @@ for index, row in df.iterrows():
 
 # Save the final DataFrame
 df.to_csv('chroma_full.csv', index=False)
+
+
+# TAG GENERATOR FROM DESCRIPTIONS AND TAG INDEX PROCESSOR
+
