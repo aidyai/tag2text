@@ -1,8 +1,3 @@
-train_file: [
-            'datasets/train/coco_train_rmcocodev_ram.json',
-             ]
-image_path_root: ""
-
 # size of vit model; base or large
 vit: 'swin_b'
 vit_grad_ckpt: False
@@ -18,4 +13,6 @@ min_lr: 0
 max_epoch: 2
 warmup_steps: 3000
 
-class_num: 4585
+# dataset
+class_num: 2606
+data_id: 'aidystark/fashion-tag2text'
