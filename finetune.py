@@ -34,10 +34,13 @@ from ram.data import create_dataset, create_loader
 import clip
 
 
+
 class Tag2TextModel(pl.LightningModule):
     def __init__(self, config, checkpoint=None):
         super().__init__()
         self.save_hyperparameters(config)
+        
+        # Ensure that tag2text is correctly callable
         self.model = tag2text(
             pretrained=checkpoint,
             image_size=config['image_size'],
@@ -72,29 +75,32 @@ class Tag2TextModel(pl.LightningModule):
         return [optimizer], [scheduler]
 
 
-
-
-
-
 def main():
     # Specified values
-    config_path = './config/pretrain.yaml'
+    config_path = '/content/tag2text/config/finetune_tag2text.yaml'
     output_dir = 'output/Pretrain'
     checkpoint = ''
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     seed = 42
 
     # Load YAML configuration
-    yaml_loader = yaml.YAML(typ='rt')
-    config = yaml_loader.load(open(config_path, 'r'))
+    with open(config_path, 'r') as f:
+        config = yaml.safe_load(f)
 
     pl.seed_everything(seed)
 
     # Create dataset and dataloader
-    datasets = [create_dataset('finetune', config, min_scale=0.2)]
+    datasets = [create_dataset(config, min_scale=0.2)]
     print('Number of training samples:', len(datasets[0]))
-
-    data_loader = create_loader(datasets, samplers=[None], batch_size=[config['batch_size']], num_workers=[4], is_trains=[True], collate_fns=[None])[0]
+    
+    data_loader = create_loader(
+        datasets, 
+        samplers=[None], 
+        batch_size=[config['batch_size']], 
+        num_workers=[4], 
+        is_trains=[True], 
+        collate_fns=[None]
+    )[0]
 
     # Create model
     model = Tag2TextModel(config, checkpoint=checkpoint)
