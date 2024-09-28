@@ -17,13 +17,13 @@ import numpy as np
 
 
 class finetune_dataset(Dataset):
-    def __init__(self, data_id, transform, transform_224, class_num=4585):
+    def __init__(self, data_id, transform, transform_224, config):
         # Load the dataset from Hugging Face
         self.dataset = load_dataset(data_id, split='train')
         
         self.transform = transform
         self.transform_224 = transform_224
-        self.class_num = class_num
+        self.class_num = config['class_num']  # Extract class_num from config
 
     def __len__(self):
         return len(self.dataset)
@@ -32,11 +32,11 @@ class finetune_dataset(Dataset):
         # Load the image, caption, and labels from the dataset
         item = self.dataset[index]
         
-        # The image is in PIL format directly from the dataset
-        image = item['image_path'].convert('RGB')
+        # The image is directly accessed from the dataset
+        image = item['image_path'].convert('RGB')  # 'image', not 'image_path'
         image = self.transform(image)
 
-        image_224 = item['image_path'].convert('RGB')
+        image_224 = item['image_path'].convert('RGB')  # Again, access 'image'
         image_224 = self.transform_224(image_224)
 
         # Process union_label_id (if available)
@@ -59,3 +59,4 @@ class finetune_dataset(Dataset):
         parse_tag = torch.tensor(parse_tag, dtype=torch.long)
 
         return image, image_224, caption, image_tag, parse_tag
+
