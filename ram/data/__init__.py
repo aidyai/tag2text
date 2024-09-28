@@ -6,7 +6,7 @@ from torchvision.transforms.functional import InterpolationMode
 from .dataset import finetune_dataset
 from .randaugment import RandomAugment
 
-def create_dataset(data_id, config, min_scale=0.5):
+def create_dataset(config, min_scale=0.5):
     normalize = transforms.Normalize((0.48145466, 0.4578275, 0.40821073), 
                                      (0.26862954, 0.26130258, 0.27577711))
 
@@ -32,17 +32,15 @@ def create_dataset(data_id, config, min_scale=0.5):
         normalize,
     ])
 
+    # Get the `data_id` from the config
+    data_id = config['data_id']
+
     # Initialize the dataset using the finetune_dataset class
     dataset = finetune_dataset(data_id=data_id, 
                                transform=transform_train, 
                                transform_224=transform_inputsize_224, 
-                               config=config)
-    
-    return dataset
-
-
-
-    
+                               config=config)    
+    return dataset    
     
 def create_sampler(datasets, shuffles, num_tasks, global_rank):
     samplers = []
